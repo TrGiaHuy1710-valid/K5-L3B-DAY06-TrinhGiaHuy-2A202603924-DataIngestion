@@ -1,4 +1,4 @@
 strategy,chunking,chunk_size,overlap,metadata,filter,vectorizer,hypothesis,dev_hit1,dev_hit3,test_hit1,test_hit3,notes
-A,,,,,,,,,,,,
-B,,,,,,,,,,,,
-C,,,,,,,,,,,,
+A,fixed size,500,50,"document_id,source,page",none,"multilingual-e5-base (768d, dense, cosine)",,11/15,12/15,4/5,4/5,
+B,structure (clauses under headings),<= 1000,0,"document_id,source,page",none,"multilingual-e5-base (768d, dense, cosine)",,14/15,15/15,4/5,4/5,
+C,structure (same chunks as B),<= 1000,0,"B + section,heading_path,article,clauses",section (only when question has a filter),"multilingual-e5-base (768d, dense, cosine)",,14/15,15/15,4/5,4/5,
