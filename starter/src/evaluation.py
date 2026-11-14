@@ -184,8 +184,12 @@ def coherence_positions(pages, n: int = 10) -> list[dict[str, Any]]:
 
 
 def _chunks_covering(chunks, pos, flat_page: str) -> list:
-    a = norm(pos["anchor"])
-    off = flat_page.find(a[:40])
+    # Match on the FULL anchor: a 40-char prefix is not unique (pos04: "Chu the chinh va (cac) Chu the phu cung ..."
+    # also opens clause 1.2.1) and selected the wrong clause. Fall back to a shorter prefix only if the
+    # full anchor is not found (e.g. line-wrap differences).
+    full = norm(pos["anchor"])
+    a = full if flat_page.find(full) >= 0 else full[:40]
+    off = flat_page.find(a)
     out = []
     for c in chunks:
         if c.page != pos["page"]:
@@ -193,7 +197,7 @@ def _chunks_covering(chunks, pos, flat_page: str) -> list:
         if "char_start" in c.metadata:  # strategy A: exact window arithmetic
             if off >= 0 and c.metadata["char_start"] <= off < c.metadata["char_end"]:
                 out.append(c)
-        elif a[:40] in norm(c.text):
+        elif a in norm(c.text):
             out.append(c)
     return out
 

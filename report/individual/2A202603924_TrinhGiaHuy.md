@@ -1,6 +1,6 @@
 # Báo cáo cá nhân — Day 6
 
-> **Trạng thái:** phần truy xuất tự động (Hit@1, Evidence Hit@3, filter, chunk, thời gian) đã chạy xong ngày 14/11/2026. Ba bảng chấm thủ công (coherence, grounding, metadata) **chưa được chấm**; các ô liên quan ghi “chưa chấm”, không dùng số ước lượng. Corpus hiện có 23 trang, **chưa đạt mức tối thiểu 30 trang**.
+> **Trạng thái:** phần truy xuất tự động (Hit@1, Evidence Hit@3, filter, chunk, thời gian) đã chạy xong ngày 14/11/2026. Ba bảng chấm thủ công (coherence, grounding, metadata) đã được chấm ngày 14/11/2026 **bởi trợ lý AI (Claude) theo tiêu chí khắt khe, không phải bởi tác giả**, sau khi đã biết kết quả Hit (không mù); xem mục “Đường dẫn và cách chọn mẫu” để biết phương pháp và giới hạn. **Tác giả cần xem lại nhãn** trước khi nộp. Corpus hiện có 23 trang, **chưa đạt mức tối thiểu 30 trang**.
 
 ## Dữ liệu và pipeline
 - **Chủ đề, nguồn/quyền, số trang và quy tắc tính trang:**
@@ -49,34 +49,41 @@ Gộp 20 câu: A 15/20 và 16/20; B 18/20 và 19/20; C 18/20 và 19/20 (Hit@1 v�
 
 | Strategy | Coherence trung bình /2 (n) | Metadata đủ và đúng (n/N) | Filter tuân thủ (n/N hoặc N/A) | Grounding 0/1/2 (số câu) và trung bình /2 |
 |---|---|---|---|---|
-| A | chưa chấm | chưa chấm (kiểm tự động: 15/15 record test có source/page hợp lệ) | N/A (không lọc) | chưa chấm |
-| B | chưa chấm | chưa chấm (kiểm tự động: 15/15) | N/A (không lọc) | chưa chấm |
-| C | chưa chấm | chưa chấm (kiểm tự động: 15/15, gồm `section` khớp trang) | **2/2 câu test có filter** (5/5 trên cả dev+test) | chưa chấm |
+| A | **0,90/2** (n = 10 vị trí; 12 chunk) | **9/15** | N/A (không lọc) | **0/0/5**, trung bình **2,00/2** |
+| B | **1,80/2** (n = 10 vị trí; 10 chunk) | **9/15** | N/A (không lọc) | **1/0/4**, trung bình **1,60/2** |
+| C | **1,80/2** (n = 10 vị trí; 10 chunk) | **15/15** | **2/2 câu test có filter** (5/5 trên cả dev+test) | **1/0/4**, trung bình **1,60/2** |
 
-Kiểm tự động metadata chỉ xét `source`, `page` (và `section` ở C) nên luôn đạt; **không thay thế nhãn thủ công**.
+Cách tính (`starter/src/manual_scores.py`): coherence mỗi vị trí = trung bình nhãn của các chunk phủ vị trí đó, rồi trung bình 10 vị trí /2 (trung bình theo chunk: A 0,83, B 1,80, C 1,80; theo mức thấp nhất mỗi vị trí: A 0,80). Phân bố nhãn coherence theo chunk (0/1/2): A 2/10/0, B 0/2/8, C 0/2/8. Metadata “đủ và đúng” = `source` và `page` đúng với nguồn, và có `section` đúng khi câu hỏi cần filter (t01, t04). A và B bị 0 ở đúng 6 dòng của hai câu filter vì **không có trường `section`**; `source`/`page` đúng ở cả 45/45 dòng. Ở C, mọi `section` khớp block thật trên trang; có 3 ghi chú nhỏ không tính lỗi: chunk `C|p23|000` (tiếp nối từ trang 22) có `clauses` rỗng, `C|p14|000` lặp `1.17.1` hai lần, `C|p15|000` có nhãn `b.` không rõ khoản mẹ.
+
+Nhãn dưới 2 và lý do đầy đủ: `starter/results/manual_scores.md` và các cột `reason` / `error_note` trong ba file CSV. Tóm tắt: **A** toàn bộ chunk là 1 hoặc 0 vì cửa sổ 500 ký tự cắt giữa từ ở hai đầu (pos08 và pos10 có chunk cắt ngay trong khoản của vị trí, nhãn 0); **B/C** mất điểm ở pos05 (mục 1.3.4 bị tách, khoản c nằm chunk sau) và pos07 (thiếu tiêu đề và khoản mẹ). Grounding: B/C trượt t03 (nhãn 0: top-3 không có khoản 1.18.2); A đạt 2 ở t03 chỉ khi **ghép hai chunk liền kề** (evidence tách, có chồng lấn 50 ký tự), nên Evidence Hit@3 tự động tính là trượt còn nhãn grounding là 2.
+
+Kiểm tự động metadata (`source`, `page`, `section` ở C) cho 15/15 ở cả ba chiến lược; nó khác nhãn thủ công ở chỗ không xét việc câu hỏi cần trường nào.
 
 Đường dẫn và cách chọn mẫu:
 - Trace đầy đủ (top-3 gồm text, score, metadata, cờ hit): `starter/results/traces_A.jsonl`, `traces_B.jsonl`, `traces_C.jsonl`.
-- Bảng nhãn thủ công (**chưa điền**): `starter/results/manual_coherence.csv` (34 dòng), `manual_grounding.csv` (15 dòng), `manual_metadata.csv` (45 dòng).
-- Mẫu chọn trước khi xem điểm: coherence = 10 vị trí cố định, là khoản ở giữa của các trang 1–10, mọi chiến lược chấm cùng vị trí (có thể có nhiều chunk bao phủ); grounding = 5 câu test × 3 chiến lược; metadata = 5 câu test × top-3 × 3 chiến lược. Người chấm: tác giả (nguy cơ thiên lệch, không dùng LLM judge).
+- Bảng nhãn thủ công đã điền: `starter/results/manual_coherence.csv` (32 dòng), `manual_grounding.csv` (15 dòng), `manual_metadata.csv` (45 dòng); tổng hợp ở `manual_scores.md` / `.json`.
+- Mẫu chọn: coherence = 10 vị trí cố định, là khoản ở giữa của các trang 1–10 (quy tắc cố định trong code), mọi chiến lược chấm cùng vị trí (có thể có nhiều chunk bao phủ); grounding = 5 câu test × 3 chiến lược; metadata = 5 câu test × top-3 × 3 chiến lược.
+- **Người chấm và phương pháp (ghi rõ):** nhãn do **trợ lý AI (Claude)** chấm, đây là một LLM judge **do một mô hình duy nhất thực hiện, không phải tác giả và không có người thứ hai**; chưa có nhãn của người. Quy tắc: coherence 0/1/2 theo GUIDE (2 = ý của vị trí trọn vẹn và tự hiểu; 1 = ý còn nhưng thiếu ngữ cảnh hoặc bị cắt giữa từ/khoản ở rìa; 0 = chính khoản của vị trí bị cắt); grounding chấm trên cả top-3 (2 = đủ trả lời và truy nguồn; 0 = không có evidence); metadata đối chiếu từng dòng với `pages.json`. Nhãn **không mù**: người chấm đã thấy Hit tự động và biết chunk thuộc chiến lược nào; chúng được viết sau khi có kết quả Hit. **Chưa chạy kiểm tra độc lập** (chấm lại bởi tác giả hoặc người thứ hai). Cần tác giả rà soát, nhất là các nhãn 1 của A (chấm khắt khe: cắt giữa từ ở rìa là bị trừ dù khoản vị trí còn nguyên).
+- **Sửa lỗi bảng mẫu trong lúc chấm:** hàm tìm chunk phủ vị trí so khớp 40 ký tự đầu của anchor; riêng pos04 chuỗi này trùng với khoản 1.2.1 nên A chọn nhầm chunk (khoản 1.2.1) và B/C có thêm một chunk thừa. Tôi đổi sang so khớp anchor đầy đủ (`evaluation.py`) và tạo lại bảng coherence trước khi chấm: **34 → 32 dòng**; vị trí mẫu không đổi, chưa có điểm nào bị đổi theo kết quả.
 
 ## Phân tích và kết luận
 - **So sánh A–B và B–C; 2 ví dụ sai:**
   - **A→B:** trên dev Hit@1 11/15 → 14/15 và Evidence Hit@3 12/15 → 15/15 (+3 câu); trên test không đổi (4/5 và 4/5). Cả 4 câu A trượt đều có **đúng trang** trong top-3 (page-hit 20/20) nhưng không chunk nào chứa trọn evidence: lỗi chunk, không phải lỗi sai trang.
   - **B→C:** Hit@1/Hit@3 **không đổi ở cả 20 câu**. Trên 5 câu filter, lọc làm thay đổi top-3 ở 3 câu (d12, d14, t04) bằng cách loại chunk khác section ở hạng 2–3, nhưng hạng của chunk gold vẫn là 1. Tuân thủ filter: C 5/5; nếu không lọc (B) top-3 chỉ tuân thủ hoàn toàn ở 2/5 câu (d13, t01), còn d12, d14, t04 lẫn chunk ngoài section. Tác dụng của metadata ở đây là **sạch phạm vi**, chưa thể hiện bằng Hit.
+  - **Coherence, metadata, grounding (nhãn do AI chấm, xem giới hạn):** coherence A 0,90/2 → B 1,80/2 (khoảng cách 0,9 điểm, lớn nhất trong năm khía cạnh; nguyên nhân là cửa sổ cố định cắt giữa từ), B = C = 1,80 vì **văn bản chunk giống hệt nhau** (metadata không thuộc văn bản nên không đổi coherence). Metadata đủ và đúng A 9/15, B 9/15 → C 15/15: lợi ích của C nằm ở trường `section` mà A/B không có (6/6 dòng của hai câu filter), không ở tăng Hit. Grounding A 2,00/2 cao hơn B/C 1,60/2 **trái chiều với Hit**: lý do là A đạt t03 nhờ ghép hai chunk liền kề có overlap (B/C không lấy được khoản 1.18.2 nên nhãn 0). Một câu quyết định 0,4 điểm trung bình nên không kết luận A tốt hơn về grounding; chỉ có thể nói ba chiến lược như nhau ở 4/5 câu.
   - **Ví dụ sai 1 – d04 (dev, A, gold tr.7):** “Nếu trả hết dư nợ sao kê…” — evidence bị **cắt giữa hai chunk** `A|p07|000` / `A|p07|001` (cửa sổ 500 ký tự cắt giữa khoản 1.5.2.a); top-1 là `A|p07|001` chỉ chứa phần sau (“u chủ thẻ thanh toán toàn bộ…”) nên không đủ evidence (kết quả `page_only`). B giữ nguyên khoản nên hit@1. Tương tự d07 (tr.9, khoản 1.9.1). d11 của A thì khác: evidence nằm trọn trong một chunk nhưng chunk đó không vào top-3 (lỗi xếp hạng).
   - **Ví dụ sai 2 – t03 (test, cả A/B/C, gold tr.15):** hỏi về hai kỳ sao kê liên tiếp trả thiếu tối thiểu. Ở B/C, top-1 là `B|p15|006` (khoản 1.18.3 “Sau Ngày đến hạn thanh toán…”), còn chunk chứa evidence `B|p15|005` (1.18.1–1.18.2) **không có trong top-3**; hạng 2–3 là tr.9 (1.8.2.b.iv) và tr.8. Nguyên nhân: các khoản cùng cụm “không thanh toán đủ số tiền thanh toán tối thiểu” rất giống nhau về từ vựng nên embedding đơn thuần khó phân biệt điều kiện “hai kỳ liên tiếp”; filter `section` không giúp vì các chunk này cùng section B.I.
-- **Chiến lược chọn, đánh đổi, điều kiện áp dụng:** (tạm thời, vì nhãn thủ công chưa có) chọn **B làm chiến lược nền** (Evidence Hit@3 19/20 so với 16/20 của A, evidence không bị cắt, ít chunk hơn: 124 so với 206, embed nhanh hơn). **C chỉ nên dùng khi người dùng/ngữ cảnh cung cấp sẵn phạm vi (section)**: đảm bảo kết quả đúng phạm vi, chi phí thêm nhỏ (nạp 0,48 s so với 0,18 s), nhưng chưa chứng minh tăng Hit trên mẫu này. Đánh đổi: B tạo chunk dài hơn (trung bình 708 so với 471 ký tự) nên một chunk có thể chứa nhiều ý; A đơn giản nhưng cắt giữa khoản.
+- **Chiến lược chọn, đánh đổi, điều kiện áp dụng:** (vẫn tạm thời vì nhãn do AI chấm và chưa có người rà soát) chọn **B làm chiến lược nền** (Evidence Hit@3 19/20 so với 16/20 của A, coherence 1,80 so với 0,90, evidence không bị cắt, ít chunk hơn: 124 so với 206, embed nhanh hơn). Grounding không làm đổi lựa chọn vì A cao hơn chỉ nhờ một câu (t03). **C chỉ nên dùng khi người dùng/ngữ cảnh cung cấp sẵn phạm vi (section)**: đảm bảo kết quả đúng phạm vi (filter 5/5, metadata 15/15 so với 9/15), chi phí thêm nhỏ (nạp 0,48 s so với 0,18 s), nhưng chưa chứng minh tăng Hit trên mẫu này. Đánh đổi: B tạo chunk dài hơn (trung bình 708 so với 471 ký tự) nên một chunk có thể chứa nhiều ý; A đơn giản nhưng cắt giữa khoản.
 - **Hạn chế:**
   - Dữ liệu: 1 tài liệu duy nhất, 23 trang (<30); kết luận chỉ áp dụng trong corpus này.
   - Test chỉ 5 câu: 1 câu = 20 điểm phần trăm; A=B=C ở test đều 4/5 và cùng trượt t03 nên **không phân biệt được** chiến lược trên test. Chỉ 5 câu filter (3 dev, 2 test).
   - A và B khác cả kích thước và cấu trúc nên chênh lệch A–B không tách riêng được tác động của từng yếu tố; Hit tính theo evidence trọn vẹn nên bất lợi cho chunk nhỏ.
-  - Nhãn: coherence, grounding, metadata thủ công **chưa chấm**; người chấm sẽ là tác giả (thiên lệch). Metadata tự động là chỉ số tạm, luôn 100%.
+  - Nhãn: coherence, grounding, metadata do **một LLM chấm, không phải người**, không mù, không có người chấm thứ hai nên chưa đo được độ đồng thuận; mẫu coherence chỉ 10 vị trí đều ở 10 trang đầu (tài liệu định nghĩa, ít đại diện cho các điều khoản phía sau), grounding chỉ 5 câu. Điểm metadata của A/B phụ thuộc quy tắc “cần `section` khi có filter” do tôi đặt; nếu chỉ xét `source`/`page` thì cả ba đều 15/15.
   - Thời gian/chi phí: một lần chạy, GPU đã nóng, nhiễu mili-giây; C được embed riêng dù text trùng B (có thể dùng chung vector); chi phí 0 vì local, không phản ánh API.
   - Quy trình: tiêu chí chọn chưa ghi trước khi xem test; đã xem độ phủ evidence trên cả test khi viết chunking (không dùng để chỉnh tham số).
 - **Nếu làm lại hoặc mở rộng:**
   1. Bổ sung tài liệu để đủ ≥30 trang (và thêm câu hỏi từ tài liệu mới, có `document_type`/`year` để filter phong phú hơn).
-  2. Hoàn thành ba bảng nhãn thủ công và điền lại mục kết quả.
+  2. Tác giả (hoặc người thứ hai) chấm lại ba bảng nhãn một cách mù (ẩn tên chiến lược), so với nhãn AI, và đo độ đồng thuận; lấy mẫu coherence rải đều toàn tài liệu thay vì 10 trang đầu.
   3. Chạy A với cửa sổ ~1000 ký tự để tách tác động kích thước khỏi cấu trúc; thêm overlap cho B khi tách khoản dài.
   4. Thêm câu filter (hiện chỉ 5) và câu cần “điều kiện/ngoại lệ” như t03; thử hybrid BM25 hoặc reranker, hoặc đưa `heading_path` vào văn bản chunk để cải thiện các khoản gần giống nhau.
   5. Chạy đo thời gian nhiều lần, ghi tách phần chunk/embed/nạp, và ghi tiêu chí chọn chiến lược trước khi chạy test.

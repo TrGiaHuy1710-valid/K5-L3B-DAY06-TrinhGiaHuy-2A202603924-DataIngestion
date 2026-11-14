@@ -1,0 +1,178 @@
+{
+  "coherence": {
+    "A": {
+      "positions_labelled": 10,
+      "positions_total": 10,
+      "chunks_labelled": 12,
+      "mean_per_position": 0.9,
+      "mean_per_position_over_2": "0.90/2",
+      "row_mean": 0.833,
+      "min_per_position_mean": 0.8,
+      "count_0_1_2": [
+        2,
+        10,
+        0
+      ],
+      "per_position": {
+        "pos01": 1,
+        "pos02": 1,
+        "pos03": 1,
+        "pos04": 1,
+        "pos05": 1,
+        "pos06": 1,
+        "pos07": 1,
+        "pos08": 0.5,
+        "pos09": 1,
+        "pos10": 0.5
+      },
+      "reasons_for_low_scores": [
+        "pos01 vcb-credit-card-terms-2026|A|p01|003 = 1: Khoản 1.5 còn nguyên nhưng chunk mở đầu bằng '...tác liên kết' và kết thúc ở 'Vietcombank phá' (cắt giữa từ); không có tiêu đề mục",
+        "pos02 vcb-credit-card-terms-2026|A|p02|004 = 1: Khoản 1.22 còn nguyên nhưng chunk mở đầu giữa câu của 1.21 ('..., thanh toán hóa đơn') và kết thúc ở 'hợ' (cắt giữa từ)",
+        "pos03 vcb-credit-card-terms-2026|A|p03|004 = 1: Mục 2.3 còn nguyên nhưng chunk bắt đầu giữa từ ('ản sửa đổi...'), trộn danh mục viết tắt với đầu phần B và cắt ở '1.1 ... a. Thẻ được sử'",
+        "pos04 vcb-credit-card-terms-2026|A|p04|003 = 1: Điều 1.2.6 chỉ có câu đầu trọn vẹn; câu thứ hai ('Việc miễn trừ... bất kỳ trách') bị cắt; chunk mở đầu giữa từ 'ưa ra'",
+        "pos05 vcb-credit-card-terms-2026|A|p05|005 = 1: Khoản 1.3.4 a-b còn nguyên nhưng chunk mở đầu giữa câu của khoản f và kết thúc giữa khoản c ('trong trường hợp C')",
+        "pos06 vcb-credit-card-terms-2026|A|p06|003 = 1: Khoản 1.4.15 bắt đầu nguyên vẹn nhưng danh sách các trường hợp bị cắt ở 'số tiền giao dịch thanh toán'; chunk mở đầu bằng mảnh 1.4.14",
+        "pos07 vcb-credit-card-terms-2026|A|p07|003 = 1: Khoản c (tra soát) nguyên vẹn nhưng mất khoản mẹ nên không rõ là lãi của giao dịch nào; chunk mở đầu giữa từ và kết thúc ở '1.6.1 ... a'",
+        "pos08 vcb-credit-card-terms-2026|A|p08|002 = 0: Khoản f (Kỳ sao kê) bị cắt ngay sau 'là khoảng thời gian V' nên định nghĩa của vị trí không còn; chunk còn mở đầu giữa từ",
+        "pos08 vcb-credit-card-terms-2026|A|p08|003 = 1: Khoản f, g, h trọn vẹn nhưng chunk mở đầu bằng mảnh khoản e ('toán đầu tiên.') và kết thúc ở 'trang thông t'",
+        "pos09 vcb-credit-card-terms-2026|A|p09|003 = 1: Khoản (ii) nguyên vẹn nhưng chunk mở đầu giữa từ ('y sao kê'), khoản (i) bị mất đầu, (iii) bị cắt ở 'không đầy'",
+        "pos10 vcb-credit-card-terms-2026|A|p10|003 = 0: Khoản 1.9.6 bị cắt ở 'Khi thực hiện giao dịch tha' nên phần nội dung của vị trí không có trong chunk",
+        "pos10 vcb-credit-card-terms-2026|A|p10|004 = 1: Khoản 1.9.6 nguyên vẹn nhưng chunk mở đầu giữa từ ('c ủy quyền này') và kết thúc giữa 1.9.7"
+      ]
+    },
+    "B": {
+      "positions_labelled": 10,
+      "positions_total": 10,
+      "chunks_labelled": 10,
+      "mean_per_position": 1.8,
+      "mean_per_position_over_2": "1.80/2",
+      "row_mean": 1.8,
+      "min_per_position_mean": 1.8,
+      "count_0_1_2": [
+        0,
+        2,
+        8
+      ],
+      "per_position": {
+        "pos01": 2,
+        "pos02": 2,
+        "pos03": 2,
+        "pos04": 2,
+        "pos05": 1,
+        "pos06": 2,
+        "pos07": 1,
+        "pos08": 2,
+        "pos09": 2,
+        "pos10": 2
+      },
+      "reasons_for_low_scores": [
+        "pos05 vcb-credit-card-terms-2026|B|p05|002 = 1: Chunk mở đầu bằng khoản e, f của mục trước (không có tiêu đề 1.3.3) và 1.3.4 mới có a-b, khoản c (quyền từ chối/thu phí) bị chuyển sang chunk sau",
+        "pos07 vcb-credit-card-terms-2026|B|p07|001 = 1: Khoản (i), (ii), c trọn vẹn nhưng thiếu tiêu đề mục và khoản mẹ nên phạm vi áp dụng của 'c' chỉ suy ra được"
+      ]
+    },
+    "C": {
+      "positions_labelled": 10,
+      "positions_total": 10,
+      "chunks_labelled": 10,
+      "mean_per_position": 1.8,
+      "mean_per_position_over_2": "1.80/2",
+      "row_mean": 1.8,
+      "min_per_position_mean": 1.8,
+      "count_0_1_2": [
+        0,
+        2,
+        8
+      ],
+      "per_position": {
+        "pos01": 2,
+        "pos02": 2,
+        "pos03": 2,
+        "pos04": 2,
+        "pos05": 1,
+        "pos06": 2,
+        "pos07": 1,
+        "pos08": 2,
+        "pos09": 2,
+        "pos10": 2
+      },
+      "reasons_for_low_scores": [
+        "pos05 vcb-credit-card-terms-2026|C|p05|002 = 1: Cùng văn bản với B",
+        "pos07 vcb-credit-card-terms-2026|C|p07|001 = 1: Cùng văn bản với B"
+      ]
+    }
+  },
+  "grounding": {
+    "A": {
+      "n": 5,
+      "count_0_1_2": [
+        0,
+        0,
+        5
+      ],
+      "mean": 2,
+      "mean_over_2": "2.00/2",
+      "reasons_for_below_2": []
+    },
+    "B": {
+      "n": 5,
+      "count_0_1_2": [
+        1,
+        0,
+        4
+      ],
+      "mean": 1.6,
+      "mean_over_2": "1.60/2",
+      "reasons_for_below_2": [
+        "t03 = 0: Top-3 không có khoản 1.18.2 (chunk B|p15|005 không được lấy); chỉ có 1.18.3-1.18.4 (phân loại nợ), phí chậm thanh toán và sao kê, không trả lời được việc khóa thẻ"
+      ]
+    },
+    "C": {
+      "n": 5,
+      "count_0_1_2": [
+        1,
+        0,
+        4
+      ],
+      "mean": 1.6,
+      "mean_over_2": "1.60/2",
+      "reasons_for_below_2": [
+        "t03 = 0: Cùng top-3 với B"
+      ]
+    }
+  },
+  "metadata": {
+    "A": {
+      "complete_and_correct": "9/15",
+      "errors": [
+        "t01 rank1 vcb-credit-card-terms-2026|A|p14|000: source/page đúng nhưng thiếu trường section; câu hỏi cần filter section nên không lọc/kiểm được phạm vi",
+        "t01 rank2 vcb-credit-card-terms-2026|A|p15|001: source/page đúng nhưng thiếu trường section; câu hỏi cần filter section nên không lọc/kiểm được phạm vi",
+        "t01 rank3 vcb-credit-card-terms-2026|A|p15|002: source/page đúng nhưng thiếu trường section; câu hỏi cần filter section nên không lọc/kiểm được phạm vi",
+        "t04 rank1 vcb-credit-card-terms-2026|A|p23|005: source/page đúng nhưng thiếu trường section; câu hỏi cần filter section nên không lọc/kiểm được phạm vi",
+        "t04 rank2 vcb-credit-card-terms-2026|A|p17|005: source/page đúng nhưng thiếu trường section; câu hỏi cần filter section nên không lọc/kiểm được phạm vi",
+        "t04 rank3 vcb-credit-card-terms-2026|A|p17|004: source/page đúng nhưng thiếu trường section; câu hỏi cần filter section nên không lọc/kiểm được phạm vi"
+      ]
+    },
+    "B": {
+      "complete_and_correct": "9/15",
+      "errors": [
+        "t01 rank1 vcb-credit-card-terms-2026|B|p14|000: source/page đúng nhưng thiếu trường section; câu hỏi cần filter section nên không lọc/kiểm được phạm vi",
+        "t01 rank2 vcb-credit-card-terms-2026|B|p15|001: source/page đúng nhưng thiếu trường section; câu hỏi cần filter section nên không lọc/kiểm được phạm vi",
+        "t01 rank3 vcb-credit-card-terms-2026|B|p15|000: source/page đúng nhưng thiếu trường section; câu hỏi cần filter section nên không lọc/kiểm được phạm vi",
+        "t04 rank1 vcb-credit-card-terms-2026|B|p23|004: source/page đúng nhưng thiếu trường section; câu hỏi cần filter section nên không lọc/kiểm được phạm vi",
+        "t04 rank2 vcb-credit-card-terms-2026|B|p17|002: source/page đúng nhưng thiếu trường section; câu hỏi cần filter section nên không lọc/kiểm được phạm vi",
+        "t04 rank3 vcb-credit-card-terms-2026|B|p23|000: source/page đúng nhưng thiếu trường section; câu hỏi cần filter section nên không lọc/kiểm được phạm vi"
+      ]
+    },
+    "C": {
+      "complete_and_correct": "15/15",
+      "errors": []
+    }
+  },
+  "filter_compliance": {
+    "A": "N/A (no filter applied)",
+    "B": "N/A (no filter applied)",
+    "C": "2/2 (100%)"
+  },
+  "partial": false,
+  "blank_rows": 0
+}
