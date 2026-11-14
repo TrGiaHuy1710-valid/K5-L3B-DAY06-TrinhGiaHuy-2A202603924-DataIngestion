@@ -1,0 +1,192 @@
+{
+  "meta": {
+    "document_id": "vcb-credit-card-terms-2026",
+    "source": "data/20260415_ DieuLeTheVCB.pdf",
+    "total_pages": 23,
+    "language": "vi",
+    "split_policy": "Chia TRƯỚC khi chạy thử, theo chủ đề: dev gồm định nghĩa/hạn mức/phí/lãi/sao kê/nhận thẻ/thẻ phụ/giao dịch bị từ chối/thông báo; test gồm tra soát-khiếu nại, nhắc nợ, chấm dứt hợp đồng, giải chấp tài sản bảo đảm. Không chỉnh chiến lược dựa trên test.",
+    "leak_risks": [
+      "t03 (khóa thẻ khi chậm thanh toán tối thiểu) cùng chủ đề rộng 'sao kê/thanh toán tối thiểu' với d04, d06: rò rỉ chủ đề nhẹ.",
+      "t01, t02 (khiếu nại) và d10 (khóa thẻ khi báo mất) cùng nhắc 'khóa thẻ/thông báo', cùng mục B.I.",
+      "Chỉ có 1 tài liệu nên không thể chia theo tài liệu."
+    ],
+    "filter_field": "section",
+    "filter_values": {
+      "A": "A. CÁC QUY ĐỊNH CHUNG (trang 1 đến giữa trang 3)",
+      "B.I": "B.I QUY ĐỊNH VỀ PHÁT HÀNH VÀ SỬ DỤNG THẺ (giữa trang 3 đến giữa trang 20)",
+      "B.II": "B.II CÁC QUY ĐỊNH KHÁC (giữa trang 20 đến trang 23)"
+    },
+    "filter_note": "Trang 3 và trang 20 là trang chuyển mục (chứa 2 section). Mọi gold của câu có filter đều nằm ở trang thuần (p1, p14, p21, p22, p23) để tránh nhập nhằng. Giá trị filter là input giả định do người dùng cung cấp trước khi truy xuất (VD: 'tôi đang đọc mục B.II').",
+    "evidence_rule": "evidence_quote phải xuất hiện nguyên văn (sau chuẩn hóa khoảng trắng/Unicode NFC) trong văn bản trang gold_page của PDF. Kiểm chứng bằng scripts/verify_benchmark.py."
+  },
+  "questions": [
+    {
+      "id": "d01", "split": "dev", "type": "truc_tiep",
+      "question": "Hạn mức rút tiền mặt tối đa của các thẻ tín dụng cùng một thương hiệu là bao nhiêu mỗi tháng?",
+      "expected_answer": "100 triệu VNĐ/tháng.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 5,
+      "evidence_quote": "Hạn mức rút tiền mặt tối đa của các thẻ tín dụng thuộc cùng một thương hiệu thẻ là 100 triệu VNĐ/tháng.",
+      "filter": null
+    },
+    {
+      "id": "d02", "split": "dev", "type": "truc_tiep",
+      "question": "Rút tiền mặt ở nước ngoài thì mỗi ngày được rút tối đa bao nhiêu?",
+      "expected_answer": "Tối đa tương đương 30 triệu VNĐ/ngày, hoặc theo quy định của Ngân hàng Nhà nước trong từng thời kỳ (và không vượt hạn mức rút tiền mặt của Thẻ).",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 5,
+      "evidence_quote": "Hạn mức rút tiền mặt tại nước ngoài tối đa tương đương 30 triệu VNĐ/ngày hoặc theo quy định của Ngân hàng nhà nước trong từng thời kỳ.",
+      "filter": null
+    },
+    {
+      "id": "d03", "split": "dev", "type": "dieu_kien",
+      "question": "Chủ thẻ xin nâng hạn mức tín dụng tạm thời thì được duy trì trong thời gian tối đa bao lâu?",
+      "expected_answer": "Tối đa không quá 6 tháng và không vượt quá thời hạn hiệu lực còn lại của Thẻ.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 5,
+      "evidence_quote": "tối đa không quá sáu (06) tháng và không vượt quá thời hạn hiệu lực còn lại của Thẻ",
+      "filter": null
+    },
+    {
+      "id": "d04", "split": "dev", "type": "dien_dat_lai",
+      "question": "Nếu tôi trả hết toàn bộ dư nợ sao kê đúng hạn thì các khoản mua sắm trong kỳ có bị tính lãi không?",
+      "expected_answer": "Không. Nếu thanh toán toàn bộ số dư nợ sao kê chậm nhất đến ngày đề nghị thanh toán, Vietcombank miễn lãi toàn bộ giao dịch thanh toán hàng hóa dịch vụ trong kỳ sao kê.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 7,
+      "evidence_quote": "Nếu chủ thẻ thanh toán toàn bộ số dư nợ sao kê, Vietcombank sẽ ưu đãi miễn lãi đối với toàn bộ giao dịch trong kỳ sao kê của chủ thẻ.",
+      "filter": null
+    },
+    {
+      "id": "d05", "split": "dev", "type": "dieu_kien",
+      "question": "Giao dịch rút tiền mặt bằng thẻ tín dụng bắt đầu bị tính lãi từ thời điểm nào?",
+      "expected_answer": "Tính lãi ngay từ ngày giao dịch được cập nhật vào hệ thống của Vietcombank đến ngày sao kê (lãi hiện trên sao kê cùng kỳ).",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 7,
+      "evidence_quote": "Vietcombank tính lãi đối với các giao dịch rút tiền mặt ngay từ ngày giao dịch được cập nhật vào hệ thống của Vietcombank đến ngày sao kê",
+      "filter": null
+    },
+    {
+      "id": "d06", "split": "dev", "type": "truc_tiep",
+      "question": "Số tiền thanh toán tối thiểu của kỳ sao kê được tính theo công thức nào?",
+      "expected_answer": "[(Số dư nợ cuối kỳ sao kê ngoài trả góp x Tỷ lệ thanh toán tối thiểu) + Số tiền thanh toán tối thiểu của các kỳ trước chưa trả + Số tiền sử dụng vượt hạn mức tín dụng trong kỳ (nếu có) + Các khoản trả góp định kỳ (nếu có)].",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 9,
+      "evidence_quote": "Số tiền thanh toán tối thiểu = [(Số dư nợ cuối kỳ sao kê ngoài trả góp x Tỷ lệ thanh toán tối thiểu) + Số tiền thanh toán tối thiểu của các kỳ sao kê trước chưa trả + Số tiền sử dụng vượt hạn mức tín dụng trong kỳ sao kê (nếu có) + Các khoản trả góp định kỳ (nếu có)]",
+      "filter": null
+    },
+    {
+      "id": "d07", "split": "dev", "type": "dieu_kien",
+      "question": "Tôi không đăng ký nhận thẻ qua bưu điện mà cũng không đến lấy thẻ thì sau bao lâu thẻ bị khóa?",
+      "expected_answer": "Chủ thẻ phải đến nhận thẻ trong vòng 90 ngày kể từ ngày phát hành; sau thời hạn này thẻ bị khóa vĩnh viễn và chủ thẻ chịu phí phát hành (nếu có), phí chấm dứt sử dụng thẻ và phí thường niên năm đầu.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 9,
+      "evidence_quote": "Trong trường hợp Chủ thẻ không đăng ký nhận Thẻ qua đường bưu điện, Chủ thẻ có trách nhiệm đến nhận Thẻ trong vòng chín mươi (90) ngày kể từ ngày phát hành Thẻ. Sau thời hạn này, Thẻ sẽ bị khóa vĩnh viễn",
+      "filter": null
+    },
+    {
+      "id": "d08", "split": "dev", "type": "dien_dat_lai",
+      "question": "Nếu người dùng thẻ phụ chi tiêu phát sinh dư nợ thì ai là người phải thanh toán cho ngân hàng?",
+      "expected_answer": "Chủ thẻ chính chịu trách nhiệm thanh toán toàn bộ dư nợ phát sinh từ Thẻ chính và các Thẻ phụ.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 4,
+      "evidence_quote": "Chủ thẻ chính chịu trách nhiệm thanh toán toàn bộ các khoản dư nợ phát sinh từ Thẻ chính và (các) Thẻ phụ.",
+      "filter": null
+    },
+    {
+      "id": "d09", "split": "dev", "type": "truc_tiep",
+      "question": "Có thể dùng thẻ tín dụng để chuyển khoản vào tài khoản thanh toán hoặc nạp tiền vào ví điện tử không?",
+      "expected_answer": "Không. Thẻ không được dùng để chuyển khoản (hoặc ghi có) vào tài khoản thanh toán, thẻ ghi nợ, thẻ trả trước, và không được dùng nạp/rút tiền từ ví điện tử.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 3,
+      "evidence_quote": "Thẻ không được sử dụng để chuyển khoản (hoặc ghi có) vào tài khoản thanh toán, thẻ ghi nợ, thẻ trả trước. Thẻ không được sử dụng để thực hiện các giao dịch nạp tiền và rút tiền từ ví điện tử.",
+      "filter": null
+    },
+    {
+      "id": "d10", "split": "dev", "type": "dien_dat_lai",
+      "question": "Báo mất thẻ cho ngân hàng thì ngân hàng phải khóa thẻ trong bao lâu?",
+      "expected_answer": "Trong vòng 01 giờ đồng hồ kể từ khi nhận được thông báo của Chủ thẻ; sau thời điểm khóa, Vietcombank chịu trách nhiệm tổn thất nếu thẻ vẫn bị sử dụng.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 11,
+      "evidence_quote": "Vietcombank khoá Thẻ trong vòng một (01) giờ đồng hồ kể từ khi nhận được thông báo của Chủ thẻ về việc Thẻ bị thất lạc, mất cắp",
+      "filter": null
+    },
+    {
+      "id": "d11", "split": "dev", "type": "dieu_kien",
+      "question": "Nếu chủ thẻ đã dùng vượt hạn mức được cấp thì ngân hàng có quyền từ chối giao dịch không?",
+      "expected_answer": "Có. Thẻ đã sử dụng vượt quá hạn mức được cấp thuộc trường hợp bị từ chối giao dịch; Vietcombank còn có quyền tạm ngừng sử dụng Thẻ và thu phí vượt hạn mức tín dụng.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 12,
+      "evidence_quote": "Thẻ đã được sử dụng vượt quá hạn mức thẻ đã được cấp.",
+      "alt_gold": [
+        {"gold_page": 5, "evidence_quote": "Vietcombank có quyền từ chối các giao dịch, tạm ngừng sử dụng Thẻ và thu phí vượt hạn mức tín dụng trong trường hợp Chủ thẻ đã chi vượt hạn mức tín dụng được cấp."}
+      ],
+      "filter": null
+    },
+    {
+      "id": "d12", "split": "dev", "type": "filter",
+      "question": "Khi sửa đổi, bổ sung bản Điều khoản và Điều kiện thẻ, ngân hàng phải thông báo trước tối thiểu bao nhiêu ngày?",
+      "expected_answer": "Tối thiểu trước 07 ngày kể từ ngày bản sửa đổi, bổ sung có hiệu lực (trừ trường hợp phải sửa đổi ngay theo pháp luật hoặc yêu cầu của cơ quan nhà nước).",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 22,
+      "evidence_quote": "tối thiểu trước bảy (07) ngày kể từ ngày Điều khoản và Điều kiện phát hành và sử dụng Thẻ tín dụng quốc tế Vietcombank được sửa đổi, bổ sung có hiệu lực, trừ trường hợp Vietcombank phải thực hiện ngay việc sửa đổi",
+      "filter": {"section": "B.II"},
+      "filter_rationale": "Cụm '07 ngày' cũng xuất hiện ở B.I (p6, p7 về thay đổi biểu phí/lãi suất, p16) nên metadata section giúp loại nhiễu."
+    },
+    {
+      "id": "d13", "split": "dev", "type": "filter",
+      "question": "Thông báo của ngân hàng gửi cho chủ thẻ bằng thư thì có hiệu lực sau bao lâu kể từ ngày gửi?",
+      "expected_answer": "Trong vòng 05 ngày kể từ ngày gửi (tính theo dấu bưu điện nơi gửi).",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 21,
+      "evidence_quote": "Trong vòng năm (05) ngày kể từ ngày gửi (tính theo dấu bưu điện nơi gửi) nếu gửi bằng thư",
+      "filter": {"section": "B.II"},
+      "filter_rationale": "Mục B.I có nhiều quy định 'ngày/ngày làm việc' về tra soát (p14-15) dễ gây nhiễu."
+    },
+    {
+      "id": "d14", "split": "dev", "type": "filter",
+      "question": "Thẻ phi vật lý được hiểu là loại thẻ gì?",
+      "expected_answer": "Là Thẻ không hiện hữu bằng hình thức vật chất, tồn tại dưới dạng điện tử, do Vietcombank phát hành cho khách hàng; có thể in ra thẻ vật lý theo thỏa thuận.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 1,
+      "evidence_quote": "Thẻ phi vật lý: là Thẻ không hiện hữu bằng hình thức vật chất, tồn tại dưới dạng điện tử",
+      "filter": {"section": "A"},
+      "filter_rationale": "Người dùng đang tra cứu phần giải thích từ ngữ (mục A). 'Thẻ phi vật lý' còn xuất hiện ở B.I p10 (cách nhận thẻ) gây nhiễu."
+    },
+    {
+      "id": "d15", "split": "dev", "type": "truc_tiep",
+      "question": "Khi tính lãi thẻ tín dụng, một năm được quy ước là bao nhiêu ngày?",
+      "expected_answer": "365 ngày.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 6,
+      "evidence_quote": "một năm là 365 (ba trăm sáu mươi lăm) ngày",
+      "filter": null
+    },
+    {
+      "id": "t01", "split": "test", "type": "filter",
+      "question": "Phát hiện giao dịch sai sót trên thẻ thì chủ thẻ chính được khiếu nại trong thời hạn bao nhiêu ngày kể từ khi phát sinh giao dịch?",
+      "expected_answer": "Trong thời hạn 60 ngày kể từ ngày phát sinh giao dịch; nếu khiếu nại sai phải chịu phí đòi bồi hoàn và các chi phí, tổn thất phát sinh.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 14,
+      "evidence_quote": "trong thời hạn sáu mươi (60) ngày kể từ ngày phát sinh giao dịch và phải chịu phí đòi bồi hoàn (nếu khiếu nại sai)",
+      "filter": {"section": "B.I"},
+      "filter_rationale": "Con số 60 ngày còn gặp ở 'Ngày đến hạn thanh toán là ngày thứ 60' (p8) cùng mục B.I nhưng khác nghĩa; filter B.I loại bỏ các đoạn thuộc A và B.II."
+    },
+    {
+      "id": "t02", "split": "test", "type": "truc_tiep",
+      "question": "Thời hạn tối đa để Vietcombank giải quyết yêu cầu tra soát, khiếu nại của chủ thẻ là bao lâu?",
+      "expected_answer": "Tối đa 180 ngày làm việc kể từ ngày Vietcombank nhận được yêu cầu tra soát khiếu nại (qua Digibank/Hotline 24/7 hoặc bằng văn bản).",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 15,
+      "evidence_quote": "trong vòng tối đa một trăm tám mươi (180) ngày làm việc kể từ ngày Vietcombank nhận được yêu cầu tra soát khiếu nại",
+      "filter": null
+    },
+    {
+      "id": "t03", "split": "test", "type": "dieu_kien",
+      "question": "Nếu chủ thẻ không trả đủ số tiền tối thiểu trong hai kỳ sao kê liên tiếp thì ngân hàng xử lý thế nào với thẻ?",
+      "expected_answer": "Vietcombank tạm khóa Thẻ bị chậm thanh toán tại ngày đề nghị thanh toán của kỳ sao kê tiếp theo và tạm khóa tất cả tài khoản thẻ tín dụng của chủ thẻ cho đến khi chủ thẻ thanh toán đủ số tiền thanh toán tối thiểu của kỳ sao kê gần nhất.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 15,
+      "evidence_quote": "Nếu Chủ thẻ không thanh toán đủ số tiền thanh toán tối thiểu trong hai (02) kỳ sao kê liên tiếp, Vietcombank sẽ tạm khoá Thẻ bị chậm thanh toán tại ngày đề nghị thanh toán của kỳ sao kê tiếp theo và tạm khóa tất cả các tài khoản thẻ tín dụng của Chủ thẻ cho đến khi Chủ thẻ thanh toán đủ số tiền thanh toán tối thiểu của kỳ sao kê gần nhất",
+      "filter": null
+    },
+    {
+      "id": "t04", "split": "test", "type": "filter",
+      "question": "Chủ thẻ muốn đơn phương chấm dứt hợp đồng thẻ thì phải báo trước bao lâu và bằng hình thức nào?",
+      "expected_answer": "Gửi thông báo bằng văn bản cho Vietcombank trước ít nhất 30 ngày và phải hoàn thành các nghĩa vụ phát sinh từ Hợp đồng.",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 23,
+      "evidence_quote": "Chủ thẻ cần gửi thông báo cho Vietcombank bằng băn bản trước ít nhất 30 (ba mươi) ngày và đảm bảo hoàn thành các nghĩa vụ phát sinh từ Hợp đồng.",
+      "filter": {"section": "B.II"},
+      "filter_rationale": "Cụm 'chấm dứt sử dụng thẻ' + '30 ngày' còn xuất hiện ở B.I (p17 chấm dứt bằng văn bản; p19 gia hạn thẻ 30 ngày), metadata B.II phân biệt chấm dứt HỢP ĐỒNG."
+    },
+    {
+      "id": "t05", "split": "test", "type": "dieu_kien",
+      "question": "Sau khi yêu cầu chấm dứt sử dụng thẻ có hiệu lực, bao lâu thì ngân hàng giải chấp tài sản bảo đảm và cần điều kiện gì?",
+      "expected_answer": "Sau 40 ngày kể từ ngày yêu cầu chấm dứt sử dụng Thẻ có hiệu lực, với điều kiện: tra soát khiếu nại (nếu có) đã giải quyết xong, tài sản bảo đảm không bảo đảm cho khoản vay nào khác tại Vietcombank và chưa bị xử lý để thanh toán nghĩa vụ của chủ thẻ (trừ khi hai bên có thỏa thuận khác).",
+      "gold_source_id": "vcb-credit-card-terms-2026", "gold_page": 20,
+      "evidence_quote": "giải chấp tài sản bảo đảm của Chủ thẻ sau 40 ngày kể từ ngày yêu cầu chấm dứt sử dụng Thẻ của Chủ thẻ có hiệu lực, chỉ khi các tra soát khiếu nại của Chủ thẻ (nếu có) đã được giải quyết xong, tài sản bảo đảm không đảm bảo cho khoản vay nào khác tại Vietcombank và tài sản bảo đảm chưa bị xử lý để thanh toán các nghĩa vụ của Chủ thẻ",
+      "filter": null
+    }
+  ]
+}

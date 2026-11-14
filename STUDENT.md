@@ -1,8 +1,8 @@
 # Thông tin học viên
 
-- Họ và tên:
-- MSSV:
-- Lớp: L3A / L3B / khác:
-- Chủ đề và corpus:
-- Repo bài nộp:
-- Commit chốt bài:
+- Họ và tên: Trịnh Gia HUy
+- MSSV: 2A202603924
+- Lớp: L3B 
+- Chủ đề và corpus: Ngân hàng, mở thẻ
+- Repo bài nộp: https://github.com/TrGiaHuy1710-valid/K5-L3B-DAY06-TrinhGiaHuy-2A202603924-DataIngestion
+- Commit chốt bài: 
