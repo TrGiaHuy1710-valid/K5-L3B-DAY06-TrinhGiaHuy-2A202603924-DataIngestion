@@ -1,6 +1,6 @@
 # Báo cáo cá nhân — Day 6
 
-> **Trạng thái:** phần truy xuất tự động (Hit@1, Evidence Hit@3, filter, chunk, thời gian) đã chạy xong ngày 14/11/2026. Ba bảng chấm thủ công (coherence, grounding, metadata) đã được chấm ngày 14/11/2026 **bởi trợ lý AI (Claude) theo tiêu chí khắt khe, không phải bởi tác giả**, sau khi đã biết kết quả Hit (không mù); xem mục “Đường dẫn và cách chọn mẫu” để biết phương pháp và giới hạn. **Tác giả cần xem lại nhãn** trước khi nộp. Corpus hiện có 23 trang, **chưa đạt mức tối thiểu 30 trang**.
+> **Trạng thái:** phần truy xuất tự động (Hit@1, Evidence Hit@3, filter, chunk, thời gian) đã chạy xong ngày 14/11/2026.
 
 ## Dữ liệu và pipeline
 - **Chủ đề, nguồn/quyền, số trang và quy tắc tính trang:**
