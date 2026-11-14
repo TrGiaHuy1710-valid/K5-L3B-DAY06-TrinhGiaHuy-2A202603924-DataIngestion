@@ -420,6 +420,18 @@ def ingest_pdf(path: Path, document_id: str, source: str, out_dir: Path) -> dict
     }
 
 
+def load_processed(json_path: Path) -> list[DocumentPage]:
+    """Reload pages written by `ingest_pdf` (blocks go to `metadata["blocks"]`)."""
+    data = json.loads(Path(json_path).read_text(encoding="utf-8"))
+    return [
+        DocumentPage(
+            data["document_id"], data["source"], p["page"], p["text"],
+            {**p["metadata"], "blocks": p["blocks"], "sections": p["sections"]},
+        )
+        for p in data["pages"]
+    ]
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     starter = Path(__file__).resolve().parent.parent  # defaults do not depend on the cwd
