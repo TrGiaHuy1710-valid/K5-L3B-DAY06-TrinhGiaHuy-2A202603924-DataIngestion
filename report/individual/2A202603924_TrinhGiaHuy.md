@@ -1,7 +1,7 @@
 # Báo cáo cá nhân — Day 6
 
 ## Dữ liệu và pipeline
-- Chủ đề, nguồn/quyền, số trang và quy tắc tính trang:
+- Chủ đề, nguồn/quyền, số trang và quy tắc tính trang: 
 - Chuẩn hóa, lỗi và giới hạn:
 - Embedding model/provider/version/số chiều, vector store/version, metric, lệnh chạy và chi phí:
 - Metadata bắt buộc, trường lọc bổ sung, nguồn giá trị và lý do chọn:

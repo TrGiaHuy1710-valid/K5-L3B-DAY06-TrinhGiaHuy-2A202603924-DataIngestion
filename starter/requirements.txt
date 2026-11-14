@@ -4,3 +4,9 @@ pypdf>=5,<7
 python-dotenv>=1,<2
 pymupdf>=1.24,<2
 # -U sentence-transformers transformers huggingface_hub
+# Embeddings: local multilingual-e5 in models/, run by src/xlmr_encoder.py (no transformers needed)
+torch>=2.2
+safetensors>=0.4
+tokenizers>=0.19
+# optional, only for API embedding providers
+openai>=1.40,<3
