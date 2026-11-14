@@ -1,0 +1,197 @@
+{
+  "run": {
+    "run_at": "2026-11-14T04:50:35+00:00",
+    "split": "all",
+    "model": "multilingual-e5-base",
+    "dimensions": 768,
+    "device": "cuda",
+    "top_k": 3,
+    "metric": "cosine (exact scan)",
+    "n_pages": 23,
+    "chunk_params": {
+      "A": {
+        "size": 500,
+        "overlap": 50
+      },
+      "B": {
+        "max_size": 1000
+      },
+      "C": {
+        "max_size": 1000
+      }
+    },
+    "python": "3.10.19",
+    "n_questions": 20,
+    "db_counts": {
+      "A": 206,
+      "B": 124,
+      "C": 124
+    }
+  },
+  "summary": {
+    "A": {
+      "all": {
+        "n_questions": 20,
+        "hit1": "15/20 (75%)",
+        "evidence_hit3": "16/20 (80%)",
+        "page_hit3": "20/20 (100%)",
+        "metadata_auto_ok": "60/60 (100%)",
+        "filter_compliance": "N/A (no filter applied)",
+        "n_filter_questions_in_split": 5,
+        "outcomes": {
+          "hit@1": 15,
+          "hit@2": 1,
+          "page_only": 4
+        },
+        "failed_ids": [
+          "d04",
+          "d07",
+          "d11",
+          "t03"
+        ],
+        "mean_latency_ms": 62.01
+      },
+      "dev": {
+        "n_questions": 15,
+        "hit1": "11/15 (73%)",
+        "evidence_hit3": "12/15 (80%)",
+        "page_hit3": "15/15 (100%)",
+        "metadata_auto_ok": "45/45 (100%)",
+        "filter_compliance": "N/A (no filter applied)",
+        "n_filter_questions_in_split": 3,
+        "outcomes": {
+          "hit@1": 11,
+          "hit@2": 1,
+          "page_only": 3
+        },
+        "failed_ids": [
+          "d04",
+          "d07",
+          "d11"
+        ],
+        "mean_latency_ms": 69.03
+      },
+      "test": {
+        "n_questions": 5,
+        "hit1": "4/5 (80%)",
+        "evidence_hit3": "4/5 (80%)",
+        "page_hit3": "5/5 (100%)",
+        "metadata_auto_ok": "15/15 (100%)",
+        "filter_compliance": "N/A (no filter applied)",
+        "n_filter_questions_in_split": 2,
+        "outcomes": {
+          "hit@1": 4,
+          "page_only": 1
+        },
+        "failed_ids": [
+          "t03"
+        ],
+        "mean_latency_ms": 40.95
+      }
+    },
+    "B": {
+      "all": {
+        "n_questions": 20,
+        "hit1": "18/20 (90%)",
+        "evidence_hit3": "19/20 (95%)",
+        "page_hit3": "20/20 (100%)",
+        "metadata_auto_ok": "60/60 (100%)",
+        "filter_compliance": "N/A (no filter applied)",
+        "n_filter_questions_in_split": 5,
+        "outcomes": {
+          "hit@1": 18,
+          "hit@2": 1,
+          "page_only": 1
+        },
+        "failed_ids": [
+          "t03"
+        ],
+        "mean_latency_ms": 53.23
+      },
+      "dev": {
+        "n_questions": 15,
+        "hit1": "14/15 (93%)",
+        "evidence_hit3": "15/15 (100%)",
+        "page_hit3": "15/15 (100%)",
+        "metadata_auto_ok": "45/45 (100%)",
+        "filter_compliance": "N/A (no filter applied)",
+        "n_filter_questions_in_split": 3,
+        "outcomes": {
+          "hit@1": 14,
+          "hit@2": 1
+        },
+        "failed_ids": [],
+        "mean_latency_ms": 47.71
+      },
+      "test": {
+        "n_questions": 5,
+        "hit1": "4/5 (80%)",
+        "evidence_hit3": "4/5 (80%)",
+        "page_hit3": "5/5 (100%)",
+        "metadata_auto_ok": "15/15 (100%)",
+        "filter_compliance": "N/A (no filter applied)",
+        "n_filter_questions_in_split": 2,
+        "outcomes": {
+          "hit@1": 4,
+          "page_only": 1
+        },
+        "failed_ids": [
+          "t03"
+        ],
+        "mean_latency_ms": 69.79
+      }
+    },
+    "C": {
+      "all": {
+        "n_questions": 20,
+        "hit1": "18/20 (90%)",
+        "evidence_hit3": "19/20 (95%)",
+        "page_hit3": "20/20 (100%)",
+        "metadata_auto_ok": "60/60 (100%)",
+        "filter_compliance": "5/5 (100%)",
+        "n_filter_questions_in_split": 5,
+        "outcomes": {
+          "hit@1": 18,
+          "hit@2": 1,
+          "page_only": 1
+        },
+        "failed_ids": [
+          "t03"
+        ],
+        "mean_latency_ms": 53.65
+      },
+      "dev": {
+        "n_questions": 15,
+        "hit1": "14/15 (93%)",
+        "evidence_hit3": "15/15 (100%)",
+        "page_hit3": "15/15 (100%)",
+        "metadata_auto_ok": "45/45 (100%)",
+        "filter_compliance": "3/3 (100%)",
+        "n_filter_questions_in_split": 3,
+        "outcomes": {
+          "hit@1": 14,
+          "hit@2": 1
+        },
+        "failed_ids": [],
+        "mean_latency_ms": 52.05
+      },
+      "test": {
+        "n_questions": 5,
+        "hit1": "4/5 (80%)",
+        "evidence_hit3": "4/5 (80%)",
+        "page_hit3": "5/5 (100%)",
+        "metadata_auto_ok": "15/15 (100%)",
+        "filter_compliance": "2/2 (100%)",
+        "n_filter_questions_in_split": 2,
+        "outcomes": {
+          "hit@1": 4,
+          "page_only": 1
+        },
+        "failed_ids": [
+          "t03"
+        ],
+        "mean_latency_ms": 58.46
+      }
+    }
+  }
+}

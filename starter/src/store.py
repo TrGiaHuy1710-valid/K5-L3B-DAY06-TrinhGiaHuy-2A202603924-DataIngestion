@@ -192,6 +192,11 @@ class PgVectorStore:
             raise RuntimeError(f"strategy {strategy}: stored embedding models {models} != query model "
                                f"{self.embedding_model!r}; re-run `python -m src.indexing`")
 
+    def chunk_ids(self, strategy: str) -> set[str]:
+        with self._connect() as conn, conn.cursor() as cur:
+            cur.execute(f"SELECT chunk_id FROM {TABLE} WHERE strategy = %s", (strategy,))
+            return {r[0] for r in cur.fetchall()}
+
     def count(self, strategy: str | None = None) -> dict[str, int]:
         with self._connect() as conn, conn.cursor() as cur:
             cur.execute(f"SELECT strategy, count(*) FROM {TABLE} GROUP BY strategy ORDER BY strategy")
